@@ -30,5 +30,6 @@ io.on('connection', (socket) => { // ? event pada saat user connect
   socket.on('disconnect', () => { // ? event pada saat user disconnected 
      console.log('user disconnected')
    })
-  
+});
+
   http.listen(port, () => console.log(`Whack-a-mole is listening on ${port}`));
