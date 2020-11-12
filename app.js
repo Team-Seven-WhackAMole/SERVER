@@ -1,10 +1,9 @@
 const express = require('express');
 const cors = require('cors');
-const { on } = require('process');
 const app = express();
 const port = process.env.PORT || 3000;
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
 
 app.use(cors());
 app.use(express.json());
@@ -31,7 +30,5 @@ io.on('connection', (socket) => { // ? event pada saat user connect
   socket.on('disconnect', () => { // ? event pada saat user disconnected 
      console.log('user disconnected')
    })
-
-})
-
-http.listen(port, () => console.log(`Whack-a-mole is listening on ${port}`));
+  
+  http.listen(port, () => console.log(`Whack-a-mole is listening on ${port}`));
