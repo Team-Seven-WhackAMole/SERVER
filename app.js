@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const { on } = require('process');
 const app = express();
 const port = process.env.PORT || 3000;
 const http = require('http').createServer(app);
@@ -23,8 +24,11 @@ io.on('connection', (socket) => { // ? event pada saat user connect
   // ?   socket.broadcast.emit('event2', payload2) balikin data ke semua client kecuali sender
   // ?   socket.emit('event3', payload3) balikin data ke sender saja
   // ? })
-
-   socket.on('disconnect', () => { // ? event pada saat user disconnected 
+  socket.on('login', (username) => {
+    onlineUsers.push(username);
+    io.emit('newUser', onlineUsers);
+  })
+  socket.on('disconnect', () => { // ? event pada saat user disconnected 
      console.log('user disconnected')
    })
 
