@@ -47,6 +47,10 @@ io.on('connection', (socket) => { // ? event pada saat user connect
     })
   })
 
+  socket.on('startGame', (roomName) => {
+    io.sockets.in(roomName).emit('startGame')
+  })
+
   socket.on('gameEnd', payload => {
     const { username, skor, roomId } = payload;
     const index = rooms.findIndex(el => el.id == roomId);
