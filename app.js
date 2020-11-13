@@ -27,6 +27,25 @@ io.on('connection', (socket) => { // ? event pada saat user connect
     onlineUsers.push(username);
     io.emit('newUser', onlineUsers);
   })
+  socket.on('createRoom', payload => {
+    let room = {
+      name: payload.room,
+      admin: payload.admin,
+      users: []
+    }
+    rooms.push(room);
+    io.emit('updateRoom', rooms);
+  })
+
+  socket.on('joinRoom', payload => {
+    socket.join(payload.roomName, () => {
+      const roomIndex = rooms.findIndex(room => room.name == payload.roomName)
+      rooms[roomIndex].users.push(payload.username)
+      io.sockets.in(payload.roomName).emit('roomDetail', rooms[roomIndex])
+      io.emit('allRoom', rooms)
+    })
+  })
+
   socket.on('gameEnd', payload => {
     const { username, skor, roomId } = payload;
     const index = rooms.findIndex(el => el.id == roomId);
