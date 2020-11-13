@@ -51,13 +51,17 @@ io.on('connection', (socket) => { // ? event pada saat user connect
     io.sockets.in(roomName).emit('startGame')
   })
 
+  // socket.on('gameEnd', payload => {
+  //   const { username, skor, roomId } = payload;
+  //   const index = rooms.findIndex(el => el.id == roomId);
+  //   const user = rooms[index].users.findIndex(el => el.username == username);
+  //   rooms[index].users[user].skor = skor;
+  //   io.sockets.to(roomId).emit('gameEnd', rooms[index]);
+  // })
   socket.on('gameEnd', payload => {
-    const { username, skor, roomId } = payload;
-    const index = rooms.findIndex(el => el.id == roomId);
-    const user = rooms[index].users.findIndex(el => el.username == username);
-    rooms[index].users[user].skor = skor;
-    io.sockets.to(roomId).emit('gameEnd', rooms[index]);
+    io.sockets.in(payload.roomName).emit('gameEnd', payload.username)
   })
+
   socket.on('disconnect', () => { // ? event pada saat user disconnected 
      console.log('user disconnected')
    })
