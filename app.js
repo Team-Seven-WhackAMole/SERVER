@@ -31,7 +31,8 @@ io.on('connection', (socket) => { // ? event pada saat user connect
     let room = {
       name: payload.room,
       admin: payload.admin,
-      users: []
+      users: [],
+      status: false
     }
     rooms.push(room);
     io.emit('updateRoom', rooms);
