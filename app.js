@@ -25,7 +25,7 @@ io.on('connection', (socket) => { // ? event pada saat user connect
   // ? })
   socket.on('login', (username) => {
     onlineUsers.push(username);
-    io.emit('newUser', onlineUsers);
+    io.emit('login', rooms);
   })
   socket.on('createRoom', payload => {
     let room = {
